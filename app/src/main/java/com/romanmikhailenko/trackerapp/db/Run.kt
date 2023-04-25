@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "running_table")
 data class Run (
     @PrimaryKey(autoGenerate = true)
-    val id: String? = null,
+    val id: Int? = null,
     val timestamp: Long = 0L,
     val distance: Int = 0,
     val averageSpeed: Float = 0f,
