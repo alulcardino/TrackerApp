@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TrackerApp</string>
+    <string name="google_maps_key">AIzaSyANDzqVxZe3OhRqv5O_hrijPbh_ITazvqo</string>
 </resources>
