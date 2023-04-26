@@ -1,20 +1,46 @@
-package com.romanmikhailenko.trackerapp
+package com.romanmikhailenko.trackerapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.romanmikhailenko.trackerapp.db.RunDao
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.romanmikhailenko.trackerapp.R
+import com.romanmikhailenko.trackerapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var runDao: RunDao
+    private var _binding: ActivityMainBinding? = null
+    private val mBinding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        Log.d("sho", runDao.hashCode().toString())
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
+
+
+        val navController = this.findNavController(R.id.fragmentContainerView)
+        mBinding.bottomNavigationView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.settingsFragment, R.id.runFragment, R.id.statisticsFragment ->
+                    mBinding.bottomNavigationView.visibility = View.VISIBLE
+                else -> mBinding.bottomNavigationView.visibility = View.GONE
+
+            }
+        }
+
+
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+
 }
